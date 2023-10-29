@@ -17,7 +17,7 @@ contract NFTReceiver4 is IERC721Receiver {
         uint256 tokenId,
         bytes calldata data
     ) public override returns (bytes4) {
-        if (address(operator) != address(noNFTContract)) {
+        if (msg.sender != address(noNFTContract)) {
             // 如果不是NoNFT合约发送的NFT，將NFT還給原始發送者，铸造新NFT并发送给原始发送者
             IERC721(msg.sender).transferFrom(address(this), from, tokenId);
             noNFTContract.mintNFT(address(this));
